@@ -142,7 +142,7 @@ const generateAmazonLink = (productName) => {
 // --- COMPONENTS ---
 
 const Header = () => (
-  <header className="flex items-center justify-between px-6 py-3 bg-slate-900 border-b border-slate-800 shrink-0 no-print">
+  <header className="flex items-center justify-between px-4 md:px-6 py-3 bg-slate-900 border-b border-slate-800 shrink-0 no-print">
     <div className="flex items-center gap-3">
       {/* Code-Generated Anvil & Hammer Logo */}
       <div className="w-12 h-12 bg-gradient-to-br from-slate-800 to-slate-950 rounded-lg border border-slate-700/50 shadow-inner flex items-center justify-center relative overflow-hidden group">
@@ -197,7 +197,7 @@ const Header = () => (
     </div>
 
     <div className="flex items-center gap-4">
-      <div className="relative">
+      <div className="relative hidden sm:block">
         <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-500" />
         <input
           type="text"
@@ -322,7 +322,7 @@ const Visualizer = ({ build, onPrev, onNext, canPrev, canNext }) => {
 
         {/* Abstract Schematic Representation */}
         <div className={`
-            relative w-[340px] h-[500px] border-4 rounded-3xl transition-all duration-700
+            relative w-full max-w-[340px] h-[500px] border-4 rounded-3xl transition-all duration-700 mx-auto
             ${activeCase ? 'border-slate-600 bg-slate-900/80 shadow-2xl' : 'border-slate-800 bg-slate-900/30 border-dashed'}
           `}>
 
@@ -332,7 +332,7 @@ const Visualizer = ({ build, onPrev, onNext, canPrev, canNext }) => {
             disabled={!canPrev}
             className={`
                 absolute -left-12 top-1/2 -translate-y-1/2 h-64 w-12 
-                flex items-center justify-end
+                hidden lg:flex items-center justify-end
                 group transition-all duration-300 z-50
                 ${!canPrev ? 'opacity-30 cursor-not-allowed grayscale' : 'cursor-pointer'}
               `}
@@ -360,7 +360,7 @@ const Visualizer = ({ build, onPrev, onNext, canPrev, canNext }) => {
             disabled={!canNext}
             className={`
                 absolute -right-12 top-1/2 -translate-y-1/2 h-64 w-12 
-                flex items-center justify-start
+                hidden lg:flex items-center justify-start
                 group transition-all duration-300 z-50
                 ${!canNext ? 'opacity-30 cursor-not-allowed grayscale' : 'cursor-pointer'}
               `}
@@ -727,7 +727,7 @@ export default function App() {
   const estimatedWattage = (build.cpu?.tdp || 0) + (build.gpu?.tdp || 0) + 100; // +100W buffer
 
   return (
-    <div className="flex flex-col h-screen bg-slate-950 text-slate-200 font-sans selection:bg-purple-500 selection:text-white">
+    <div className="flex flex-col h-screen bg-slate-950 text-slate-200 font-sans selection:bg-purple-500 selection:text-white overflow-hidden">
       <style>{`
         .custom-scrollbar::-webkit-scrollbar {
           width: 6px;
@@ -785,11 +785,11 @@ export default function App() {
 
       <Header />
 
-      <main className="flex-1 flex overflow-hidden no-print">
+      <main className="flex-1 flex flex-col lg:flex-row overflow-y-auto lg:overflow-hidden no-print scroll-smooth">
         {/* LEFT COLUMN: WIZARD */}
-        <div className="w-72 flex flex-col border-r border-slate-800 bg-slate-900/50 h-full">
+        <div className="w-full lg:w-72 flex flex-col border-r-0 lg:border-r border-b lg:border-b-0 border-slate-800 bg-slate-900/50 h-auto lg:h-full order-2 lg:order-1 shrink-0">
           {/* Top Half: Component Categories */}
-          <div className="h-1/2 flex flex-col border-b border-slate-800">
+          <div className="h-72 lg:h-1/2 flex flex-col border-b border-slate-800">
             <div className="p-4 border-b border-slate-800 shrink-0">
               <h2 className="text-xs font-bold text-slate-500 uppercase tracking-widest">Component Selection</h2>
             </div>
@@ -821,7 +821,7 @@ export default function App() {
           </div>
 
           {/* Bottom Half: Products List */}
-          <div className="h-1/2 flex flex-col bg-slate-900/30">
+          <div className="h-96 lg:h-1/2 flex flex-col bg-slate-900/30">
             <div className="p-3 border-b border-slate-800/50 bg-slate-900/95 sticky top-0 z-10 backdrop-blur">
               <h3 className="text-sm font-semibold text-white">
                 Select {STEPS[selectedStep].label}
@@ -847,7 +847,7 @@ export default function App() {
         </div>
 
         {/* CENTER COLUMN: VISUALIZER */}
-        <div className="flex-1 p-6 flex flex-col items-center justify-center bg-radial-gradient from-slate-900 to-slate-950 relative">
+        <div className="w-full lg:flex-1 p-6 flex flex-col items-center justify-center bg-radial-gradient from-slate-900 to-slate-950 relative order-1 lg:order-2 min-h-[600px] lg:min-h-0 shrink-0">
           {/* Background Grid Decoration */}
           <div className="absolute inset-0 opacity-10"
             style={{
@@ -868,7 +868,7 @@ export default function App() {
         </div>
 
         {/* RIGHT COLUMN: SUMMARY */}
-        <div className="w-72 bg-slate-900 border-l border-slate-800 flex flex-col">
+        <div className="w-full lg:w-72 bg-slate-900 border-l-0 lg:border-l border-t lg:border-t-0 border-slate-800 flex flex-col order-3 lg:order-3 shrink-0 h-auto lg:h-full">
           <div className="p-6 border-b border-slate-800">
             <h2 className="text-sm font-bold text-slate-100 uppercase tracking-widest mb-1">Build Summary</h2>
             <p className="text-xs text-slate-500">Estimated compatibility check: <span className="text-green-400 font-bold">PASS</span></p>
